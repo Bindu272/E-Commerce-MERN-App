@@ -5,6 +5,22 @@ import { Link } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword]=useState(false)
+const [formData, setFormData]=useState({
+  email:"",
+  password:""
+})
+const handleChange=(e)=>{
+  const {name, value}=e.target
+  setFormData((prev)=>{
+    return{
+    ...prev,
+    [name]:value
+}})
+}
+  const handleSubmit=(e)=>{
+    e.preventDefault()
+    console.log("form data", formData)
+  }
   return (
     <section id="login">
       <div className="mx-auto container p-4">
@@ -12,18 +28,18 @@ const Login = () => {
           <div className="w-20 h-20 mx-auto">
             <img src={loginIcons} alt="login icons" />
           </div>
-          <form className='pt-6 flex flex-col gap-2'>
+          <form className='pt-6 flex flex-col gap-2' onSubmit={handleSubmit}>
           <div className='grid'>
                             <label>Email : </label>
                             <div className='bg-slate-100 p-2'>
                               <input type="email"
-                               placeholder="email" className="w-full h-full outline-none bg-transparent"/>
+                               placeholder="email" className="w-full h-full outline-none bg-transparent" name="email" value={formData.email} onChange={handleChange}/>
                             </div>
                             </div>
                             <div>
                               <label>Password:</label>
                               <div className="bg-slate-100 p-2 flex">
-                                <input placeholder="enter password" type={showPassword?"text":"password"} className="w-full h-full outline-none bg-transparent"/>
+                                <input placeholder="enter password" type={showPassword?"text":"password"} name="password" className="w-full h-full outline-none bg-transparent" value={formData.password} onChange={handleChange}/>
                                 <div className="cursor-pointer text-1" onClick={()=>setShowPassword((prev)=>!prev)}>
                                 <span>
                     {showPassword?(<FaEyeSlash/>):(<FaEye/>)}
